@@ -1,92 +1,19 @@
 import React, { Component, useState, useEffect } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, Image, Button, Header, ScrollView } from 'react-native'
+import { StyleSheet,  Text, View, TouchableOpacity, TouchableHighlight, Image, Button, Header, ScrollView } from 'react-native'
 import { Audio } from 'expo-av';
 import Music from './Music'
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components";
+import * as Updates from "expo-updates";
+import Restart from './Restart'
 
-// export default function Player() {
-//   const [sound, setSound] = useState();
-
-//   async function playSound() {
-//     console.log('Loading Sound');
-//     const { sound } = await Audio.Sound.createAsync(
-//        require('./../assets/best.mp3')
-//     );
-//     setSound(sound);
-
-//     console.log('Playing Sound');
-//     await sound.playAsync(); }
-
-//  useEffect(() => {
-//     return sound
-//       ? () => {
-//           console.log('Unloading Sound');
-//           sound.unloadAsync(); }
-//       : undefined;
-//   }, [sound]);
-
-//   async function stopSound() {
-//     console.log('Loading Sound');
-//     const { sound } = await Audio.Sound.createAsync(
-//        require('./../assets/best.mp3')
-//     );
-//     setSound(sound);
-
-//     console.log('Playing Sound');
-//     await sound.playAsync(false); }
-
-//  useEffect(() => {
-//     return sound
-//       ? () => {
-//           console.log('Unloading Sound');
-//           sound.unloadAsync(); }
-//       : undefined;
-//   }, [sound]);
-
-//   return (
-//     <View style={styles.bar}>
-//     <TouchableOpacity  onPress={playSound} 
-//     activeOpacity={0.5}>
-//       <Image source={require('./../images/music.png')}
-//   style={styles.music}  title='Play Sound' />
- 
-//  </TouchableOpacity>
-
-//       <Button title="stop"  style={styles.stop}/>
-   
-//     </View>
-//   );
-// }
-// const styles = StyleSheet.create({
-
-// bar : {
-// backgroundColor: 'rgba(120,154,245, 1)',
-// zIndex: 1,
-// height: 70,
-// },
-// stop :{
-//   height: 50,
-//   width: 50,
-//   top: 10,
-//   marginLeft: 250,
-//   opacity: 0.7
-
-// music: {
-// position: 'absolute',
-//   height: 50,
-//   width: 50,
-//   top: 10,
-// marginLeft: 80,
-// },
-
-// })
 
 
 const audioBookPlaylist = [ source= require("./../assets/best.mp3")
 ];
 
 export default class Player extends React.Component {
+  
   state = {
     isPlaying: false,
     playbackInstance: null,
@@ -157,6 +84,7 @@ export default class Player extends React.Component {
     const { playbackInstance, currentIndex } = this.state;
     return null;
   }
+  
 
   render() {
     return (
@@ -166,10 +94,14 @@ export default class Player extends React.Component {
             {this.state.isPlaying ? (
               <Image style={styles.play} source={require('./../images/stop-2.png')} />
             ) : (
-              <Image style={styles.play} source={require('./../images/music.png')} />
+              <Image style={styles.play} source={require('./../images/headphones.png')} />
             )}
-       
+
         </TouchableOpacity>
+        
+        <Restart/>
+        <Image style={styles.ice} source={require('./../images/ice.png')}/>
+       
       </View>
     );
   }
@@ -178,16 +110,30 @@ export default class Player extends React.Component {
 const styles = StyleSheet.create({
 
 bar : {
-backgroundColor: 'rgba(120,154,245, 1)',
+backgroundColor: 'rgba(123, 163, 209,  1)',
 zIndex: 1,
 height: 70,
+borderTopLeftRadius: 150,
+borderTopRightRadius: 150,
+borderBottomLeftRadius: 150,
+borderBottomRightRadius: 150,
 },
 play :{
   height: 50,
   width: 50,
   top: 10,
   marginLeft: 40,
-  opacity: 0.7
+
+
+},
+ice :{
+  height: 40,
+  width: 40,
+  top: 18,
+  marginLeft: 265,
+position: 'absolute',
+
+
 }
 
 

@@ -1,16 +1,22 @@
 import React, {useState, useEffect} from 'react';
-import { Dimensions, StyleSheet, View, Image, Text, Button, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import { Dimensions, Animated, I18nManager, StyleSheet, View, Image, Text, Button, ImageBackground, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import Cat from './components/Cat'
 import Obstacles from './components/Obstacles';
 import { useFonts } from 'expo-font';
 import Player from './components/Player'
 import { Audio } from 'expo-av';
+import RNRestart from 'react-native-restart';
+import * as Updates from "expo-updates";
+import BlinkingText from './components/BlinkingText'
 
 
 
 export default function App() {
   
-
+  async function toggleRTL() {
+    await I18nManager.forceRTL(I18nManager.isRTL ? false : true);
+    await Updates.reloadAsync();
+  }
 
   const screenWidth = Dimensions.get("screen").width
   const screenHeight = Dimensions.get("screen").height
@@ -48,6 +54,7 @@ export default function App() {
     //if i dont have catBottom as a dependecy, it wont stop
   }, [catBottom])
   console.log(catBottom)
+
 
   const jump = () => {
     if (!isGameOver && (catBottom < screenHeight)) {
@@ -117,8 +124,9 @@ export default function App() {
       setIsGameOver(true)
     }
     const image = { url: "./images/bg.png" };
-    
+
   
+
 
   return (
     
@@ -126,11 +134,10 @@ export default function App() {
     <TouchableWithoutFeedback onPress={jump}>
       <View style={styles.container}>
 
-
-
       <Image source={require('./images/bg.png')} style= {styles.backgroundImage}/>
 
-        {isGameOver && <Text style={styles.text}>{score} points</Text>}
+        {isGameOver && <Text  style={styles.text}>{score} points</Text>}
+   
         <Player/>
         <Cat
           catBottom = {catBottom} 
@@ -154,6 +161,7 @@ export default function App() {
           obstaclesLeft = {obstaclesLeftTwo}
         />
       </View>
+     
     </TouchableWithoutFeedback>
 
   )
@@ -161,24 +169,36 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-
-   
-   
+    flex: 1, 
+    backgroundColor: 'black'
   },
+  container1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  
   backgroundImage: {
     flex: 1,
     width: null,
     height: null,
     },
 
+    button : {
+      height: 70,
+      width: 90,
+    top: -300,
+   
+    },
+
     text: {
-      fontSize: 60,
-      color: 'pink',
+      fontSize: 40,
+      color: 'black',
       fontFamily: 'Roboto',
  marginTop: 350,
  marginLeft: 100,
  position: 'absolute',
+ zIndex: 99
 
 
     }
